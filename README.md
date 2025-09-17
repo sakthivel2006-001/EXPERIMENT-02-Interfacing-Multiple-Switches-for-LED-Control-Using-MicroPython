@@ -1,39 +1,23 @@
 # EXPERIMENT-02-Interfacing-Multiple-Switches-for-LED-Control-Using-MicroPython
 
-
- 
-## NAME:
-
-## DEPARTMENT:
-
-## ROLL NO:
-
-## DATE OF EXPERIMENT:
+### NAME: SAKTHIVEL S
+### DEPARTMENT: B.TECH IT
+### ROLL NO: 212223220090
+### DATE OF EXPERIMENT:
 
 ## AIM
-
 To interface multiple switches with the Raspberry Pi Pico and control LEDs using MicroPython.
 
 ## APPARATUS REQUIRED
-
 Raspberry Pi Pico
-
 2 Push Button Switches
-
 2 LEDs (Light Emitting Diodes)
-
 330Ω Resistors
-
 Breadboard
-
 Jumper Wires
-
 USB Cable
 
 ## THEORY
-
-
-
 FIGURE-01: RASPBERRY PI PICO PINOUT DIAGRAM
 
 Raspberry Pi Pico is a microcontroller board based on the RP2040 chip. It supports MicroPython, making it suitable for IoT and embedded applications. The Raspberry Pi Pico is a compact microcontroller board featuring a 40-pin layout, including power, ground, GPIO, and communication interface pins. It operates with a dual-core ARM Cortex-M0+ processor and supports MicroPython and C/C++ programming.
@@ -64,29 +48,74 @@ Connect LED 2 to GP17 via a 330Ω resistor.
 Connect the other terminals of the switches to GND.
 
 ## PROGRAM (MicroPython)
-''''
+FIG1
+```
+from machine import Pin
+import time
 
+led = Pin(0, Pin.OUT)
 
+switch = Pin(1, Pin.IN, Pin.PULL_DOWN)
 
- 
+while True:
+    if switch.value() == 1:   
+        led.value(1)
+        print("Switch ON → LED ON")
+    else:                    
+        led.value(0)
+        print("Switch OFF → LED OFF")
+    
+    time.sleep(0.1)  
+```
+FIG2
+```
+from machine import Pin
+import time
+
+led1 = Pin(0, Pin.OUT)  
+led2 = Pin(22, Pin.OUT)   
+
+switch1 = Pin(1, Pin.IN, Pin.PULL_UP)  
+switch2 = Pin(21, Pin.IN, Pin.PULL_UP)  
+
+while True:
+    s1 = 1 - switch1.value()
+    s2 = 1 - switch2.value()
+
+    state = (s1 << 1) | s2  
+    if state == 0b00:        
+        led1.value(0)
+        led2.value(0)
+
+    elif state == 0b01:      
+        led1.value(0)
+        led2.value(1)
+
+    elif state == 0b10:       
+        led1.value(1)
+        led2.value(0)
+
+    elif state == 0b11:      
+        led1.value(1)
+        led2.value(1)
+
+    time.sleep(0.05)
+```
 
 ## OUTPUT
 
+FIGURE-01: 
+<img width="1919" height="916" alt="Screenshot 2025-09-07 215931" src="https://github.com/user-attachments/assets/6b41393b-b204-4f3d-b441-2bcb7a68d74d" />
+<img width="1919" height="983" alt="Screenshot 2025-09-07 215904" src="https://github.com/user-attachments/assets/4cb2053f-321b-466e-bbc6-ee1262eb36f1" />
 
-
-FIGURE-02: CIRCUIT CONNECTION
-
-FIGURE-03: CODE EXECUTION OUTPUT
-
-FIGURE-04: LED STATUS BASED ON SWITCH INPUTS
-## TIMING DIGAGRAM 
-
-
-UPLOAD YOUR TIMING DIGARAM HERE 
-
+FIGURE-02:
+<img width="1919" height="920" alt="Screenshot 2025-09-07 221520" src="https://github.com/user-attachments/assets/eec1603e-cf3e-4d6c-b1c9-b4d9514d34dd" />
+<img width="1919" height="895" alt="Screenshot 2025-09-07 221452" src="https://github.com/user-attachments/assets/68d59077-7be0-45ab-83fa-d1f1b5604707" />
+<img width="1919" height="896" alt="Screenshot 2025-09-07 221402" src="https://github.com/user-attachments/assets/3ca80adf-b7e3-4413-a804-b62a4fa97bff" />
+<img width="1919" height="897" alt="Screenshot 2025-09-07 221330" src="https://github.com/user-attachments/assets/1e104974-13d3-4eb3-9e36-fcc6c3215481" />
 
 
 ## RESULTS
-
+Thus the intefacing multiple switches for led control using micrppython was executed successfully.
 The multiple switches connected to the Raspberry Pi Pico successfully controlled the LEDs based on their states, confirming the proper interfacing of digital inputs and outputs.
 
